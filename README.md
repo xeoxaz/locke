@@ -1,0 +1,2 @@
+# locke
+bun discord bot
