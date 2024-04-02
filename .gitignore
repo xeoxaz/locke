@@ -2,6 +2,7 @@
 
 # locke
 locke.json
+.env.local
 
 # Logs
 
