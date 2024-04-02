@@ -10,10 +10,12 @@ const message = async (_client, _message)=>{
         var a1 = a0.toLowerCase();
         var a2 = a1.split(` `);
         if(a2[0].includes(`locke`)){
+            a2.shift();
             var a3 = "";
             a2.forEach(a => {
                 a3 += ` ${a}`;
             });
+            _message.channel.sendTyping();
             var response = await lol(_message.content);
             _message.channel.send(`${response}`);
         }

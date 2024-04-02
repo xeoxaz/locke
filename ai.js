@@ -20,7 +20,7 @@ const lol = async (_data)=>{
     const postData = {
         "model": `${model}`,
         // "prompt": `${_data}`, for use in generate mode.
-        "format": "json",
+        // "format": "json",
         "stream": false,
         "messages": [
             {
