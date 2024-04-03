@@ -51,6 +51,7 @@ const lol = async (_data)=>{
     rc.stopLoading(`Generation Complete!`); // stop loading.
     if (response.ok) {
         const rd = await response.json();
+        // console.log(rd);
         var reply = `${rd.message.content}`; // generated text
         log.push(rd.message); // log history
         rc.log(`Locke: ${reply}`)

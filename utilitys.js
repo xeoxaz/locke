@@ -13,7 +13,10 @@ export class redCake {
         if(this.id){
             this.stopLoading(clc.cyanBright(`Override Accepted.`));
         }
-        var s = cliSpinners.sand;
+        // https://github.com/sindresorhus/cli-spinners/blob/HEAD/spinners.json
+        // var s = cliSpinners.bouncingBar;
+        var s = cliSpinners.runner;
+        // var s = cliSpinners.line;
         var i = 0;
         this.id = setInterval(() => {
             process.stdout.clearLine(0);
@@ -21,7 +24,7 @@ export class redCake {
             process.stdout.write(`${this.tag} ${clc.bold(_data)}${clc.redBright(s.frames[i])} `);
             i++;
             if(i > s.frames.length - 1){ i = 0 };
-        }, 75);
+        }, 500);
     };
 
     stopLoading(_data){

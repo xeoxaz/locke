@@ -46,10 +46,10 @@ tryLogin();
 // Get discord token from .env.local
 async function tryLogin(){
     rc.clear();
-    rc.startLoading(`Generating please wait: `);
+    rc.startLoading(`Connecting to discord: `);
     if(process.env.DISCORD_TOKEN){
         await client.login(process.env.DISCORD_TOKEN);
-        rc.stopLoading(`Online!`);
+        rc.stopLoading(`Connected to discord!`);
     }else{
         rc.stopLoading(`Discord token: Missing.`);
     }

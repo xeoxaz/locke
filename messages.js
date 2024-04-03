@@ -26,6 +26,7 @@ const message = async (_client, _message)=>{
             if(a2[0].includes(`restart`)){
                 await rp(_message, data);
                 process.exit();
+                // pm2 not finished.
             }else{
                 await rp(_message, data);
             }
