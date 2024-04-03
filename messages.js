@@ -1,10 +1,17 @@
 // console.log(`${message.author.username}: ${message.content}`);
-const { PermissionsBitField } = require('discord.js');
+// const { PermissionsBitField } = require('discord.js');
 
-const { log } = require('./utilitys.js');
+const {redCake} = require('./utilitys.js');
+var rc = new redCake(`AI`);
 const { lol } = require(`./ai.js`);
 
 const message = async (_client, _message)=>{ 
+    var data = {
+        author: _message.author,
+        message: "",
+        username: _message.author.username,
+    }
+
     if(!_message.author.bot){
         var a0 = _message.content;
         var a1 = a0.toLowerCase();
@@ -15,11 +22,29 @@ const message = async (_client, _message)=>{
             a2.forEach(a => {
                 a3 += ` ${a}`;
             });
-            _message.channel.sendTyping();
-            var response = await lol(_message.content);
-            _message.channel.send(`${response}`);
+            data.message = a3;
+            if(a2[0].includes(`restart`)){
+                await rp(_message, data);
+                process.exit();
+            }else{
+                await rp(_message, data);
+            }
+
+        }else{
+            // log message
+            rc.log(`${_message.author.username}: ${_message.content}`);
         }
+
+        // var ct = _message.channel.type;
+        // log(`ct: ${ct}`);
     }
+}
+
+async function rp(_message, _data){
+    _message.channel.sendTyping();
+    var response = await lol(_data);
+    _message.channel.send(`${response}`);
+    return response;
 }
 
 module.exports = { message };

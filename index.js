@@ -21,12 +21,18 @@ const client = new Client({
 });
 
 // local imports
-const { log } = require('./utilitys.js') // log ext..
+import { redCake } from './utilitys.js';
+var rc = new redCake(`Core`);
+
+const { lol } = require(`./ai.js`);
+
+
 const { message } = require('./messages.js') // handle message incomming
 
 // Events
-client.once(Events.ClientReady, (readyClient) => {
-	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+client.once(Events.ClientReady, async (readyClient) => {
+    var tag = readyClient.user.tag;
+    var r = await lol({username: `Server`, message: `Wake up it's time to work.`});
 });
 
 client.on('messageCreate', (_message) => {
@@ -38,11 +44,13 @@ client.on('messageCreate', (_message) => {
 tryLogin();
 
 // Get discord token from .env.local
-function tryLogin(){
-    log(`Trying to login..`);
+async function tryLogin(){
+    rc.clear();
+    rc.startLoading(`Generating please wait: `);
     if(process.env.DISCORD_TOKEN){
-        client.login(process.env.DISCORD_TOKEN);
+        await client.login(process.env.DISCORD_TOKEN);
+        rc.stopLoading(`Online!`);
     }else{
-        log(`Discord token: Missing.`);
+        rc.stopLoading(`Discord token: Missing.`);
     }
 }

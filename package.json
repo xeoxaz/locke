@@ -1,7 +1,7 @@
 {
   "name": "locke",
   "module": "index.js",
-  "type": "module",
+
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -9,6 +9,11 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "cli-color": "^2.0.4",
+    "cli-spinners": "^2.9.2",
+    "clicolor": "^3.0.5",
+    "discord.js": "^14.14.1",
+    "ora": "^8.0.1",
+    "pm2": "^5.3.1"
   }
 }

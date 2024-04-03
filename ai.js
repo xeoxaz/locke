@@ -3,19 +3,25 @@
 // Now using ollama ai
 
 const { fetch } = require(`bun`);
-const { log } = require('./utilitys.js') // log ext..
 
 // curl http://localhost:11434/api/generate -d '{
 //  "model": "llama2",
 //  "prompt": "Why is the sky blue?"
 // }'
 
+const {redCake} = require('./utilitys.js');
+var rc = new redCake(`AI`);
+
+var log = [];
+
 // Define your API endpoint
 const apiEndpoint = `http://localhost:11434/api/chat`; // local host
 const model = `locke`; // custom ai
 
+
+
 const lol = async (_data)=>{
-    log(`Locke -> ${_data}`);
+    rc.log(`${_data.username} -> ${_data.message}`);
 
     const postData = {
         "model": `${model}`,
@@ -25,12 +31,16 @@ const lol = async (_data)=>{
         "messages": [
             {
                 "role": "user",
-                "content": `${_data}`
+                "content": `${_data.message}`
             }
         ],
     };
 
-    log(`Locke: Please wait..`);
+    log.forEach((l)=>{
+        postData.messages.push(l);
+    });
+
+    rc.startLoading(`Generating: `);
     const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
@@ -38,18 +48,23 @@ const lol = async (_data)=>{
         },
         body: JSON.stringify(postData) 
     });
-    
-    // Handle the response
+    rc.stopLoading(`Generation Complete!`); // stop loading.
     if (response.ok) {
-        const responseData = await response.json();
-        // console.log(responseData);
-        var reply = `${responseData.message.content}`;
-        log(`Locke: ${reply}`)
-        return `${reply}`;
+        const rd = await response.json();
+        var reply = `${rd.message.content}`; // generated text
+        log.push(rd.message); // log history
+        rc.log(`Locke: ${reply}`)
+        if(reply){
+            return `${reply}`;
+        }else{
+            return `...`;
+        }
     } else {
-        log(`Locke: ${response.statusText}`);
+        rc.log(`Locke: ${response.statusText}`);
         return `I was unable to compute that.`;
     }
+
+    
 };
 
 module.exports = { lol };
