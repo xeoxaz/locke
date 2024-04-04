@@ -2,7 +2,7 @@
 // const { PermissionsBitField } = require('discord.js');
 
 const {redCake} = require('./utilitys.js');
-var rc = new redCake(`AI`);
+var rc = new redCake(`🛰️`);
 const { lol } = require(`./ai.js`);
 
 const message = async (_client, _message)=>{ 
@@ -10,6 +10,7 @@ const message = async (_client, _message)=>{
         author: _message.author,
         message: "",
         username: _message.author.username,
+        channel: _message.channel,
     }
 
     if(!_message.author.bot){
@@ -23,13 +24,19 @@ const message = async (_client, _message)=>{
                 a3 += ` ${a}`;
             });
             data.message = a3;
-            if(a2[0].includes(`restart`)){
-                await rp(_message, data);
-                process.exit();
-                // pm2 not finished.
+            if(a2.length >= 1){
+                if(a2[0].includes(`restart`)){
+                    await rp(_message, data);
+                    //process.exit();
+                    // pm2 not finished.
+                }else{
+                    await rp(_message, data);
+                }
             }else{
-                await rp(_message, data);
+                data.message = "I can't hear you!";
+                rp(_message, data);
             }
+            
 
         }else{
             // log message
@@ -42,7 +49,7 @@ const message = async (_client, _message)=>{
 }
 
 async function rp(_message, _data){
-    _message.channel.sendTyping();
+    _data.channel.sendTyping();
     var response = await lol(_data);
     _message.channel.send(`${response}`);
     return response;

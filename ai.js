@@ -10,7 +10,6 @@ const { fetch } = require(`bun`);
 // }'
 
 const {redCake} = require('./utilitys.js');
-var rc = new redCake(`AI`);
 
 var log = [];
 
@@ -21,6 +20,15 @@ const model = `locke`; // custom ai
 
 
 const lol = async (_data)=>{
+    var checker;
+    var t = `📦`
+    if(_data.message){
+        t = `🗨️`;
+    }
+    if(!_data.channel){
+        t = `⭕`
+    }
+    var rc = new redCake(`📦`);
     rc.log(`${_data.username} -> ${_data.message}`);
 
     const postData = {
@@ -41,6 +49,15 @@ const lol = async (_data)=>{
     });
 
     rc.startLoading(`Generating: `);
+    setTimeout(()=>{
+        checker = setInterval(() => {
+            rc.stopLoading(`🚚 In transit..`);
+            if(_data.channel){
+                _data.channel.sendTyping();
+            }
+            rc.startLoading(`It's taking a bit longer then usual: `);
+        }, 10000);
+    }, 10000)
     const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
@@ -48,8 +65,9 @@ const lol = async (_data)=>{
         },
         body: JSON.stringify(postData) 
     });
-    rc.stopLoading(`Generation Complete!`); // stop loading.
+    rc.stopLoading(`[ Finished Task ]\n`); // stop loading.
     if (response.ok) {
+        clearInterval(checker);
         const rd = await response.json();
         // console.log(rd);
         var reply = `${rd.message.content}`; // generated text
@@ -61,7 +79,7 @@ const lol = async (_data)=>{
             return `...`;
         }
     } else {
-        rc.log(`Locke: ${response.statusText}`);
+        rc.log(`Server <- ${response.statusText}`);
         return `I was unable to compute that.`;
     }
 

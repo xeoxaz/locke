@@ -1,4 +1,6 @@
+
 const cliSpinners = require('cli-spinners');
+
 var clc = require("cli-color");
 const fs = require('fs');
 
@@ -6,16 +8,18 @@ export class redCake {
 
     constructor(_moduleName) {
         this.module = _moduleName;
-        this.tag = `${clc.white("(")}${clc.blue(this.module)}${clc.white(")")}`;
+        this.tag = `${clc.white("[")}${clc.blue(this.module)}${clc.white("]")}`;
     }
-
+    
     startLoading(_data){
         if(this.id){
             this.stopLoading(clc.cyanBright(`Override Accepted.`));
         }
         // https://github.com/sindresorhus/cli-spinners/blob/HEAD/spinners.json
         // var s = cliSpinners.bouncingBar;
-        var s = cliSpinners.runner;
+        
+        var s = cliSpinners.aesthetic;
+
         // var s = cliSpinners.line;
         var i = 0;
         this.id = setInterval(() => {
@@ -33,7 +37,8 @@ export class redCake {
         process.stdout.clearLine(0);
         process.stdout.cursorTo(0);
         if(_data){
-            this.log(`${clc.greenBright(_data)}`);
+            process.stdout.write(`${this.tag} ${clc.redBright(_data)}`);
+            // this.log(`${clc.greenBright(_data)}`);
         }
     };
 

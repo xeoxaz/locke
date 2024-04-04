@@ -22,7 +22,7 @@ const client = new Client({
 
 // local imports
 import { redCake } from './utilitys.js';
-var rc = new redCake(`Core`);
+var rc = new redCake(`🍰`);
 
 const { lol } = require(`./ai.js`);
 
@@ -50,8 +50,8 @@ async function tryLogin(){
     rc.startLoading(`Connecting to discord: `);
     if(process.env.DISCORD_TOKEN){
         await client.login(process.env.DISCORD_TOKEN);
-        rc.stopLoading(`Connected to discord!`);
+        rc.stopLoading(`Connected to discord! 🛰️\n`);
     }else{
-        rc.stopLoading(`Discord token: Missing.`);
+        rc.stopLoading(`Discord token: Missing. ☠️`);
     }
 }
