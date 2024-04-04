@@ -35,4 +35,5 @@ Make sure ollama port is reachable.
 [ ] Program DM's
 
 ### Preview Image
-![locke_preview](https://github.com/xeoxaz/locke/assets/108138638/dbe63c88-a868-49ae-8553-ed7c5c3bbac0)
+
+![preview](https://github.com/xeoxaz/locke/assets/108138638/8f8257df-7004-49f3-971a-5a6c05d3217f)
