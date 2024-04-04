@@ -15,8 +15,6 @@ As ollama is a chat bot all by its self. You can use ollama to hold the history 
 *wip*
 
 ### Todo
-[ ] Add post cli start
-
 [ ] Move to faster cpu
 
 [ ] Program DM's

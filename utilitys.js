@@ -1,6 +1,6 @@
 const cliSpinners = require('cli-spinners');
 var clc = require("cli-color");
-
+const fs = require('fs');
 
 export class redCake {
 
@@ -47,4 +47,16 @@ export class redCake {
     clear(){
         process.stdout.write(clc.erase.screen);
     };
+
+    post(){
+        try {
+            const data = fs.readFileSync('./ascii.txt', 'utf-8');
+            const lines = data.split(/\r?\n/); // Split by newline characters
+            lines.forEach((line) => {
+                console.log(line); // Process each line here
+            });
+        } catch (error) {
+            console.error('Error reading the file:', error.message);
+        }
+    }
 }

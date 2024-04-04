@@ -46,6 +46,7 @@ tryLogin();
 // Get discord token from .env.local
 async function tryLogin(){
     rc.clear();
+    rc.post();
     rc.startLoading(`Connecting to discord: `);
     if(process.env.DISCORD_TOKEN){
         await client.login(process.env.DISCORD_TOKEN);
