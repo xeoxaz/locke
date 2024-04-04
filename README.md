@@ -12,10 +12,25 @@ Using ollama (lama 2 ai model), I have swapped tinidolphin for the core "locke".
 As ollama is a chat bot all by its self. You can use ollama to hold the history of the chat.
 
 ### Settup
-*wip*
+Requires ubuntu or ubuntu server.
+
+> sudo apt install curl
+
+> sudo apt install git
+
+> curl -fsSL https://bun.sh/install | bash
+
+> curl -fsSL https://ollama.com/install.sh | sh
+
+> run ollama run model_name_here
+
+Make sure ollama port is reachable.
+
+> git clone https://github.com/xeoxaz/locke
+
+> bun .
 
 ### Todo
-[ ] Move to faster cpu
 
 [ ] Program DM's
 

@@ -18,7 +18,7 @@ export class redCake {
         // https://github.com/sindresorhus/cli-spinners/blob/HEAD/spinners.json
         // var s = cliSpinners.bouncingBar;
         
-        var s = cliSpinners.aesthetic;
+        var s = cliSpinners.bouncingBall;
 
         // var s = cliSpinners.line;
         var i = 0;

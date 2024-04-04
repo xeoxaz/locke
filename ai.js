@@ -22,13 +22,10 @@ const model = `locke`; // custom ai
 const lol = async (_data)=>{
     var checker;
     var t = `📦`
-    if(_data.message){
+    if(_data.channel){
         t = `🗨️`;
     }
-    if(!_data.channel){
-        t = `⭕`
-    }
-    var rc = new redCake(`📦`);
+    var rc = new redCake(`${t}`);
     rc.log(`${_data.username} -> ${_data.message}`);
 
     const postData = {
@@ -49,14 +46,17 @@ const lol = async (_data)=>{
     });
 
     rc.startLoading(`Generating: `);
+    var before = log.length;
     setTimeout(()=>{
-        checker = setInterval(() => {
-            rc.stopLoading(`🚚 In transit..`);
-            if(_data.channel){
-                _data.channel.sendTyping();
-            }
-            rc.startLoading(`It's taking a bit longer then usual: `);
-        }, 10000);
+        if(before == log.length){
+            checker = setInterval(() => {
+                rc.stopLoading(`🚚 In transit..`);
+                if(_data.channel){
+                    _data.channel.sendTyping();
+                }
+                rc.startLoading(`..A bit longer then usual: `);
+            }, 10000);
+        }
     }, 10000)
     const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -65,9 +65,12 @@ const lol = async (_data)=>{
         },
         body: JSON.stringify(postData) 
     });
-    rc.stopLoading(`[ Finished Task ]\n`); // stop loading.
+    rc.stopLoading(`[✅] Transaction complete.\n`); // stop loading.
     if (response.ok) {
+
         clearInterval(checker);
+        checker = null;
+
         const rd = await response.json();
         // console.log(rd);
         var reply = `${rd.message.content}`; // generated text

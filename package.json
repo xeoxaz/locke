@@ -1,7 +1,6 @@
 {
   "name": "locke",
   "module": "index.js",
-
   "devDependencies": {
     "@types/bun": "latest"
   },

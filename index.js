@@ -17,6 +17,8 @@ const client = new Client({
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.GuildPresences
 	],
 });
 
@@ -31,8 +33,12 @@ const { message } = require('./messages.js') // handle message incomming
 
 // Events
 client.once(Events.ClientReady, async (readyClient) => {
-    var tag = readyClient.user.tag;
-    var r = await lol({username: `Server`, message: `Wake up it's time to work.`});
+    var payload = {username: `Server`, message: `One word. Nothing else.`};
+    var generated = await lol(payload);
+    client.user.setPresence({
+        activities: [{ name: `${generated}`}],
+        status: 'dnd',
+    });
 });
 
 client.on('messageCreate', (_message) => {
