@@ -7,6 +7,13 @@
 
 Using ollama (lama 2 ai model), I have swapped tinidolphin for the core "locke".
 
+```
+    FROM gemma
+    PARAMETER temperature 0
+    PARAMETER num_ctx 1024
+    SYSTEM Your a spartan from halo. Your name is Locke.
+```
+
 > While using discord, typing it's name first then message: "Locke, how are you?". The bot working as the middleware will send the message to *locke* then returned to discord chat.
 
 As ollama is a chat bot all by its self. You can use ollama to hold the history of the chat.

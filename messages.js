@@ -34,7 +34,7 @@ const message = async (_client, _message)=>{
                 }
             }else{
                 data.message = "I can't hear you!";
-                rp(_message, data);
+                await rp(_message, data);
             }
             
 
@@ -44,6 +44,7 @@ const message = async (_client, _message)=>{
         }
 
         // var ct = _message.channel.type;
+        // check for dm
         // log(`ct: ${ct}`);
     }
 }
@@ -51,8 +52,9 @@ const message = async (_client, _message)=>{
 async function rp(_message, _data){
     _data.channel.sendTyping();
     var response = await lol(_data);
-    _message.channel.send(`${response}`);
-    return response;
+    if(response){
+        _message.channel.send(`${response}`);
+    }
 }
 
 module.exports = { message };

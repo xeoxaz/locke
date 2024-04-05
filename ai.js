@@ -9,15 +9,13 @@ const { fetch } = require(`bun`);
 //  "prompt": "Why is the sky blue?"
 // }'
 
-const {redCake} = require('./utilitys.js');
+const { redCake } = require('./utilitys.js');
 
 var log = [];
 
 // Define your API endpoint
 const apiEndpoint = `http://localhost:11434/api/chat`; // local host
 const model = `locke`; // custom ai
-
-
 
 const lol = async (_data)=>{
     var checker;
@@ -32,7 +30,7 @@ const lol = async (_data)=>{
         "model": `${model}`,
         // "prompt": `${_data}`, for use in generate mode.
         // "format": "json",
-        "stream": false,
+        "stream": false, // Might work on <---------
         "messages": [
             {
                 "role": "user",
@@ -46,9 +44,17 @@ const lol = async (_data)=>{
     });
 
     rc.startLoading(`Generating: `);
-    var before = log.length;
+
+    const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(postData) 
+    });
+
     setTimeout(()=>{
-        if(before == log.length){
+        if(!response){
             checker = setInterval(() => {
                 rc.stopLoading(`🚚 In transit..`);
                 if(_data.channel){
@@ -58,28 +64,23 @@ const lol = async (_data)=>{
             }, 10000);
         }
     }, 10000)
-    const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify(postData) 
-    });
+
     rc.stopLoading(`[✅] Transaction complete.\n`); // stop loading.
     if (response.ok) {
-
         clearInterval(checker);
         checker = null;
 
         const rd = await response.json();
         // console.log(rd);
         var reply = `${rd.message.content}`; // generated text
-        log.push(rd.message); // log history
-        rc.log(`Locke: ${reply}`)
+        rc.log(`Server <- ${reply}`)
         if(reply){
+            log.push(rd.message); // log history
             return `${reply}`;
         }else{
-            return `...`;
+            log = [];
+            var payload = {username: `Server`, message: `You appologize for not understanding.`};
+            return await lol(payload);
         }
     } else {
         rc.log(`Server <- ${response.statusText}`);
