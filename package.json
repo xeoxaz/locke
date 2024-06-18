@@ -11,7 +11,7 @@
     "cli-color": "^2.0.4",
     "cli-spinners": "^2.9.2",
     "clicolor": "^3.0.5",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.3",
     "ora": "^8.0.1",
     "pm2": "^5.3.1"
   }
